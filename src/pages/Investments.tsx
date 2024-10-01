@@ -35,19 +35,64 @@ export default function InvestmentTracker() {
     quantity: 0,
     purchasePrice: 0,
   });
+  const [loading, setLoading] = useState(false);
 
-  const addStock = (e: React.FormEvent) => {
+  const fetchCurrentPrice = async (stockQuote: string) => {
+    try {
+      const response = await fetch("http://localhost:3000/data", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          stockQuote: stockQuote,
+          exchange: "NSE",
+        }),
+      });
+
+      const data = await response.json();
+
+      const priceString = data.price;
+      const priceNumber = parseFloat(priceString.replace(/[₹,]/g, ""));
+
+      return priceNumber;
+    } catch (error) {
+      console.error("Error fetching current price:", error);
+      return null;
+    }
+  };
+
+  const addStock = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (
+      !newStock.name ||
+      newStock.quantity <= 0 ||
+      newStock.purchasePrice <= 0
+    ) {
+      alert("Please fill out all fields correctly.");
+      return;
+    }
+
+    setLoading(true);
+    const currentPrice = await fetchCurrentPrice(newStock.name);
+
+    if (currentPrice === null) {
+      alert("Error fetching stock price. Try again later.");
+      setLoading(false);
+      return;
+    }
+
     setStocks([
       ...stocks,
       {
         ...newStock,
         id: Date.now(),
-        currentPrice:
-          newStock.purchasePrice * (1 + (Math.random() - 0.5) * 0.1), // Simulating current price
+        currentPrice,
       },
     ]);
     setNewStock({ name: "", quantity: 0, purchasePrice: 0 });
+    setLoading(false);
   };
 
   const totalInvested = stocks.reduce(
@@ -93,7 +138,7 @@ export default function InvestmentTracker() {
             <CardContent>
               <form onSubmit={addStock} className="flex flex-wrap gap-4">
                 <Input
-                  placeholder="Stock Name"
+                  placeholder="Stock Quote (e.g., GOOG)"
                   value={newStock.name}
                   onChange={(e) =>
                     setNewStock({ ...newStock, name: e.target.value })
@@ -124,8 +169,13 @@ export default function InvestmentTracker() {
                   }
                   className="w-32"
                 />
-                <Button type="submit">
-                  <PlusIcon className="mr-2 h-4 w-4" /> Add Stock
+                <Button type="submit" disabled={loading}>
+                  {loading ? (
+                    "Adding..."
+                  ) : (
+                    <PlusIcon className="mr-2 h-4 w-4" />
+                  )}
+                  {loading ? null : "Add Stock"}
                 </Button>
               </form>
             </CardContent>
@@ -161,8 +211,8 @@ export default function InvestmentTracker() {
                           {stock.name}
                         </TableCell>
                         <TableCell>{stock.quantity}</TableCell>
-                        <TableCell>${stock.purchasePrice.toFixed(2)}</TableCell>
-                        <TableCell>${stock.currentPrice.toFixed(2)}</TableCell>
+                        <TableCell>₹{stock.purchasePrice.toFixed(2)}</TableCell>
+                        <TableCell>₹{stock.currentPrice.toFixed(2)}</TableCell>
                         <TableCell>
                           <span
                             className={
@@ -171,7 +221,7 @@ export default function InvestmentTracker() {
                                 : "text-red-600"
                             }
                           >
-                            ${Math.abs(profitLoss).toFixed(2)}
+                            ₹{Math.abs(profitLoss).toFixed(2)}
                             {profitLoss >= 0 ? (
                               <TrendingUpIcon className="inline ml-1 h-4 w-4" />
                             ) : (
@@ -200,7 +250,7 @@ export default function InvestmentTracker() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
-                  ${totalInvested.toFixed(2)}
+                  ₹{totalInvested.toFixed(2)}
                 </div>
               </CardContent>
             </Card>
@@ -213,7 +263,7 @@ export default function InvestmentTracker() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
-                  ${totalCurrent.toFixed(2)}
+                  ₹{totalCurrent.toFixed(2)}
                 </div>
               </CardContent>
             </Card>
@@ -230,7 +280,7 @@ export default function InvestmentTracker() {
                     totalProfitLoss >= 0 ? "text-green-600" : "text-red-600"
                   }`}
                 >
-                  ${Math.abs(totalProfitLoss).toFixed(2)}
+                  ₹{Math.abs(totalProfitLoss).toFixed(2)}
                   {totalProfitLoss >= 0 ? (
                     <TrendingUpIcon className="inline ml-1 h-4 w-4" />
                   ) : (
