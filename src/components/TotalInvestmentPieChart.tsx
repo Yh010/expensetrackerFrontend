@@ -32,44 +32,17 @@ interface TotalInvestmentChartProps {
   totalAmountInvested: number;
 }
 
-/* const chartConfig = {
-  visitors: {
-    label: "Visitors",
-  },
-  chrome: {
-    label: "Chrome",
-    color: "hsl(var(--chart-1))",
-  },
-  safari: {
-    label: "Safari",
-    color: "hsl(var(--chart-2))",
-  },
-  firefox: {
-    label: "Firefox",
-    color: "hsl(var(--chart-3))",
-  },
-  edge: {
-    label: "Edge",
-    color: "hsl(var(--chart-4))",
-  },
-  other: {
-    label: "Other",
-    color: "hsl(var(--chart-5))",
-  },
-} satisfies ChartConfig; */
-
 export function TotalInvestmentChart({
   stocks,
   totalAmountInvested,
 }: TotalInvestmentChartProps) {
-  // Data for the Pie chart
   const data = stocks.map((stock, index) => ({
     stockName: stock.name,
-    percent: (stock.amountInvested / totalAmountInvested) * 100,
-    fill: `hsl(var(--chart-${(index % 5) + 1}))`, // Assign different colors
+    percent:
+      ((stock.purchasePrice * stock.quantity) / totalAmountInvested) * 100,
+    fill: `hsl(var(--chart-${(index % 5) + 1}))`,
   }));
 
-  // Dynamically generate the chart configuration
   const datachartConfig = stocks.reduce((config, stock, index) => {
     config[stock.name] = {
       label: stock.name,
@@ -86,7 +59,7 @@ export function TotalInvestmentChart({
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
-          config={datachartConfig} // Dynamic chart configuration for the legend
+          config={datachartConfig}
           className="mx-auto aspect-square max-h-[250px]"
         >
           <PieChart>
