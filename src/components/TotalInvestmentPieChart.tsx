@@ -18,14 +18,6 @@ import {
 
 export const description = "A pie chart with a label list";
 
-const chartData = [
-  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
-  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-  { browser: "other", visitors: 90, fill: "var(--color-other)" },
-];
-
 interface Stock {
   id: number;
   name: string;
@@ -40,7 +32,7 @@ interface TotalInvestmentChartProps {
   totalAmountInvested: number;
 }
 
-const chartConfig = {
+/* const chartConfig = {
   visitors: {
     label: "Visitors",
   },
@@ -64,46 +56,50 @@ const chartConfig = {
     label: "Other",
     color: "hsl(var(--chart-5))",
   },
-} satisfies ChartConfig;
+} satisfies ChartConfig; */
 
 export function TotalInvestmentChart({
   stocks,
   totalAmountInvested,
 }: TotalInvestmentChartProps) {
-  const data = [];
+  // Data for the Pie chart
+  const data = stocks.map((stock, index) => ({
+    stockName: stock.name,
+    percent: (stock.amountInvested / totalAmountInvested) * 100,
+    fill: `hsl(var(--chart-${(index % 5) + 1}))`, // Assign different colors
+  }));
 
-  stocks.forEach((stock) => {
-    data.push({
-      stockName: stock.name,
-      percent: (stock.amountInvested / totalAmountInvested) * 100,
-      fill: "var(--color-other)",
-    });
-  });
+  // Dynamically generate the chart configuration
+  const datachartConfig = stocks.reduce((config, stock, index) => {
+    config[stock.name] = {
+      label: stock.name,
+      color: `hsl(var(--chart-${(index % 5) + 1}))`,
+    };
+    return config;
+  }, {} as ChartConfig);
 
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
-        <CardTitle>Pie Chart - Label List</CardTitle>
+        <CardTitle>Pie Chart - Investment Breakdown</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
-          config={chartConfig}
+          config={datachartConfig} // Dynamic chart configuration for the legend
           className="mx-auto aspect-square max-h-[250px]"
         >
           <PieChart>
             <ChartTooltip
-              content={<ChartTooltipContent nameKey="visitors" hideLabel />}
+              content={<ChartTooltipContent nameKey="stockName" hideLabel />}
             />
-            <Pie data={chartData} dataKey="visitors">
+            <Pie data={data} dataKey="percent" nameKey="stockName">
               <LabelList
-                dataKey="browser"
+                dataKey="stockName"
                 className="fill-background"
                 stroke="none"
                 fontSize={12}
-                formatter={(value: keyof typeof chartConfig) =>
-                  chartConfig[value]?.label
-                }
+                formatter={(value: string) => datachartConfig[value]?.label}
               />
             </Pie>
           </PieChart>
@@ -114,7 +110,7 @@ export function TotalInvestmentChart({
           Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+          Showing total investment breakdown for the last 6 months
         </div>
       </CardFooter>
     </Card>
