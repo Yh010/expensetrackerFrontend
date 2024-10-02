@@ -302,7 +302,10 @@ export default function InvestmentTracker() {
             </Card>
           </div>
           <div className="mt-2 flex justify-between">
-            <TotalInvestmentChart />
+            <TotalInvestmentChart
+              stocks={stocks}
+              totalAmountInvested={totalInvested}
+            />
             <ProfitLossChart />
           </div>
         </div>

@@ -1,5 +1,3 @@
-"use client";
-
 import { TrendingUp } from "lucide-react";
 import { LabelList, Pie, PieChart } from "recharts";
 
@@ -28,6 +26,20 @@ const chartData = [
   { browser: "other", visitors: 90, fill: "var(--color-other)" },
 ];
 
+interface Stock {
+  id: number;
+  name: string;
+  quantity: number;
+  purchasePrice: number;
+  currentPrice: number;
+  amountInvested: number;
+}
+
+interface TotalInvestmentChartProps {
+  stocks: Stock[];
+  totalAmountInvested: number;
+}
+
 const chartConfig = {
   visitors: {
     label: "Visitors",
@@ -54,7 +66,20 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function TotalInvestmentChart() {
+export function TotalInvestmentChart({
+  stocks,
+  totalAmountInvested,
+}: TotalInvestmentChartProps) {
+  const data = [];
+
+  stocks.forEach((stock) => {
+    data.push({
+      stockName: stock.name,
+      percent: (stock.amountInvested / totalAmountInvested) * 100,
+      fill: "var(--color-other)",
+    });
+  });
+
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
