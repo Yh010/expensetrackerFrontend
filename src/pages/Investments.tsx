@@ -18,7 +18,10 @@ import {
   TrendingDownIcon,
   DollarSignIcon,
   PercentIcon,
+  IndianRupeeIcon,
 } from "lucide-react";
+import { TotalInvestmentChart } from "@/components/TotalInvestmentPieChart";
+import { ProfitLossChart } from "@/components/ProfitLossPieChart";
 
 interface Stock {
   id: number;
@@ -26,6 +29,7 @@ interface Stock {
   quantity: number;
   purchasePrice: number;
   currentPrice: number;
+  amountInvested: number;
 }
 
 export default function InvestmentTracker() {
@@ -34,6 +38,7 @@ export default function InvestmentTracker() {
     name: "",
     quantity: 0,
     purchasePrice: 0,
+    amountInvested: 0,
   });
   const [loading, setLoading] = useState(false);
 
@@ -91,7 +96,7 @@ export default function InvestmentTracker() {
         currentPrice,
       },
     ]);
-    setNewStock({ name: "", quantity: 0, purchasePrice: 0 });
+    setNewStock({ name: "", quantity: 0, purchasePrice: 0, amountInvested: 0 });
     setLoading(false);
   };
 
@@ -193,11 +198,13 @@ export default function InvestmentTracker() {
                     <TableHead>Quantity</TableHead>
                     <TableHead>Purchase Price</TableHead>
                     <TableHead>Current Price</TableHead>
+                    <TableHead>Total Invested</TableHead>
                     <TableHead>Profit/Loss</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {stocks.map((stock) => {
+                    const investedAmount = stock.purchasePrice * stock.quantity;
                     const profitLoss =
                       (stock.currentPrice - stock.purchasePrice) *
                       stock.quantity;
@@ -213,6 +220,7 @@ export default function InvestmentTracker() {
                         <TableCell>{stock.quantity}</TableCell>
                         <TableCell>₹{stock.purchasePrice.toFixed(2)}</TableCell>
                         <TableCell>₹{stock.currentPrice.toFixed(2)}</TableCell>
+                        <TableCell>₹{investedAmount.toFixed(2)}</TableCell>
                         <TableCell>
                           <span
                             className={
@@ -246,7 +254,7 @@ export default function InvestmentTracker() {
                 <CardTitle className="text-sm font-medium">
                   Total Invested
                 </CardTitle>
-                <DollarSignIcon className="h-4 w-4 text-muted-foreground" />
+                <IndianRupeeIcon className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
@@ -259,7 +267,7 @@ export default function InvestmentTracker() {
                 <CardTitle className="text-sm font-medium">
                   Total Current Value
                 </CardTitle>
-                <DollarSignIcon className="h-4 w-4 text-muted-foreground" />
+                <IndianRupeeIcon className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
@@ -292,6 +300,10 @@ export default function InvestmentTracker() {
                 </p>
               </CardContent>
             </Card>
+          </div>
+          <div className="mt-2 flex justify-between">
+            <TotalInvestmentChart />
+            <ProfitLossChart />
           </div>
         </div>
       </main>
