@@ -21,7 +21,7 @@ import {
   IndianRupeeIcon,
 } from "lucide-react";
 import { TotalInvestmentChart } from "@/components/TotalInvestmentPieChart";
-import { ProfitLossChart } from "@/components/ProfitLossPieChart";
+//import { ProfitLossChart } from "@/components/ProfitLossPieChart";
 
 interface Stock {
   id: number;
@@ -301,12 +301,12 @@ export default function InvestmentTracker() {
               </CardContent>
             </Card>
           </div>
-          <div className="mt-2 flex justify-between">
+          <div className="mt-2 flex justify-center">
             <TotalInvestmentChart
               stocks={stocks}
               totalAmountInvested={totalInvested}
             />
-            <ProfitLossChart />
+            {/*  <ProfitLossChart /> */}
           </div>
         </div>
       </main>
