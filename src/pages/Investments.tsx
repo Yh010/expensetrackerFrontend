@@ -21,6 +21,7 @@ import {
   IndianRupeeIcon,
 } from "lucide-react";
 import { TotalInvestmentChart } from "@/components/TotalInvestmentPieChart";
+import InvestmentShowcaseCard from "@/components/GeneratedCard/UserCard";
 //import { ProfitLossChart } from "@/components/ProfitLossPieChart";
 
 interface Stock {
@@ -109,6 +110,11 @@ export default function InvestmentTracker() {
     0
   );
   const totalProfitLoss = totalCurrent - totalInvested;
+
+  const investmentData = {
+    totalInvestment: 50000,
+    totalProfit: 15000,
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800">
@@ -307,6 +313,9 @@ export default function InvestmentTracker() {
               totalAmountInvested={totalInvested}
             />
             {/*  <ProfitLossChart /> */}
+          </div>
+          <div>
+            <InvestmentShowcaseCard data={investmentData} />
           </div>
         </div>
       </main>
