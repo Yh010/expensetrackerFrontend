@@ -17,6 +17,7 @@ import {
   CheckCircle,
   Lock,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function LandingPage() {
   const [email, setEmail] = useState("");
@@ -47,6 +48,7 @@ export default function LandingPage() {
           >
             Pricing
           </a>
+          <Link to="/app">Try the app now</Link>
         </nav>
       </header>
       <main className="flex-1">

@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,13 +14,13 @@ import {
   PlusIcon,
   TrendingUpIcon,
   TrendingDownIcon,
-  DollarSignIcon,
   PercentIcon,
   IndianRupeeIcon,
 } from "lucide-react";
 import { TotalInvestmentChart } from "@/components/TotalInvestmentPieChart";
 import InvestmentShowcaseCard from "@/components/GeneratedCard/UserCard";
-//import { ProfitLossChart } from "@/components/ProfitLossPieChart";
+import { ProfitLossChart } from "@/components/ProfitLossPieChart";
+import Navbar from "@/components/Navbar/Navbar";
 
 interface Stock {
   id: number;
@@ -118,23 +116,7 @@ export default function InvestmentTracker() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800">
-      <nav className="bg-white dark:bg-gray-800 shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center">
-              <DollarSignIcon className="h-8 w-8 text-blue-500" />
-              <span className="ml-2 text-xl font-semibold text-gray-800 dark:text-white">
-                InvestTrack
-              </span>
-            </div>
-            <div className="flex items-center">
-              <Button variant="ghost">Dashboard</Button>
-              <Button variant="ghost">Profile</Button>
-              <Button variant="ghost">Settings</Button>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
@@ -307,14 +289,12 @@ export default function InvestmentTracker() {
               </CardContent>
             </Card>
           </div>
-          <div className="mt-2 flex justify-center">
+          <div className="mt-2 flex justify-between">
             <TotalInvestmentChart
               stocks={stocks}
               totalAmountInvested={totalInvested}
             />
-            {/*  <ProfitLossChart /> */}
-          </div>
-          <div>
+            <ProfitLossChart />
             <InvestmentShowcaseCard data={investmentData} />
           </div>
         </div>
