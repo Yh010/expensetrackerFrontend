@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   Card,
   CardContent,
@@ -64,16 +64,28 @@ export default function InvestmentShowcaseCard({
   const [showProfit, setShowProfit] = useState(true);
   const investorRank = getInvestorRank(data.totalProfit);
   const praisePhrase = getPraisePhrase(investorRank);
+  const elementRef = useRef<HTMLDivElement>(null);
 
   const handleDownload = async () => {
-    const element = document.getElementById("investment-card");
+    if (elementRef.current) {
+      try {
+        const dataUrl = await toPng(elementRef.current, { cacheBust: false });
+        const link = document.createElement("a");
+        link.download = "my-investment-showcase.png";
+        link.href = dataUrl;
+        link.click();
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    /* const element = document.getElementById("investment-card");
     if (element) {
       const dataUrl = await toPng(element);
       const link = document.createElement("a");
       link.download = "my-investment-showcase.png";
       link.href = dataUrl;
       link.click();
-    }
+    } */
   };
 
   const handleShare = () => {
@@ -94,6 +106,7 @@ export default function InvestmentShowcaseCard({
 
   return (
     <Card
+      ref={elementRef}
       id="investment-card"
       className="w-full max-w-md mx-auto bg-white overflow-hidden shadow-lg rounded-2xl border-4 border-black"
     >
