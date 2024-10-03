@@ -1,10 +1,15 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import InvestmentTracker from "./pages/Investments";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   return (
-    <>
-      <InvestmentTracker />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/app" element={<InvestmentTracker />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
