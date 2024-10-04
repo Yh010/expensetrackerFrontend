@@ -34,6 +34,7 @@ import {
 } from "@/components/ui/sheet";
 import { Label } from "@/components/ui/label";
 import { useAuth0 } from "@auth0/auth0-react";
+import StockNewsCard from "@/components/StockEdit/NewsCard";
 
 interface Stock {
   id: number;
@@ -286,6 +287,13 @@ export default function InvestmentTracker() {
                                       id="username"
                                       value="@peduarte"
                                       className="col-span-3"
+                                    />
+                                  </div>
+                                  <div>
+                                    <div>News</div>
+                                    <StockNewsCard
+                                    /* symbol={stockSymbol}
+                                      news={newsData} */
                                     />
                                   </div>
                                 </div>
