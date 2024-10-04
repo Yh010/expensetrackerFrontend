@@ -40,6 +40,7 @@ import {
   YAxis,
   Tooltip,
 } from "recharts";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const spendingData = [
   { category: "Housing", amount: 1200 },
@@ -53,6 +54,13 @@ export default function UserProfile() {
   const [showBalance, setShowBalance] = useState(false);
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
+  const { user } = useAuth0();
+  const name = user?.name
+    ?.toString()
+    .split(" ")
+    .filter((part) => part.length > 0)
+    .map((part) => part[0])
+    .join("");
 
   return (
     <div className="container mx-auto p-4 space-y-8">
@@ -60,11 +68,10 @@ export default function UserProfile() {
         <div className="flex items-center space-x-4">
           <Avatar className="h-20 w-20">
             <AvatarImage src="/placeholder-avatar.jpg" alt="User" />
-            <AvatarFallback>JD</AvatarFallback>
+            <AvatarFallback>{name}</AvatarFallback>
           </Avatar>
           <div>
-            <h1 className="text-2xl font-bold">John Doe</h1>
-            <p className="text-gray-500">Financial Enthusiast</p>
+            <h1 className="text-2xl font-bold">{user?.name}</h1>
           </div>
         </div>
         <Button>Edit Profile</Button>
@@ -232,11 +239,11 @@ export default function UserProfile() {
           <CardContent className="space-y-2">
             <div className="flex items-center space-x-2">
               <Mail className="h-5 w-5 text-gray-500" />
-              <span>john.doe@example.com</span>
+              <span>{user?.email}</span>
             </div>
             <div className="flex items-center space-x-2">
               <Smartphone className="h-5 w-5 text-gray-500" />
-              <span>+1 (555) 123-4567</span>
+              <span>+1 (555) 123-4567 {user?.phone_number}</span>
             </div>
           </CardContent>
           <CardFooter>
