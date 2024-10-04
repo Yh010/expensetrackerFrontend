@@ -33,6 +33,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Label } from "@/components/ui/label";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface Stock {
   id: number;
@@ -126,12 +127,15 @@ export default function InvestmentTracker() {
     totalProfit: 15000,
   };
 
+  const { user, isAuthenticated } = useAuth0();
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800">
       <Navbar />
 
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
+          {isAuthenticated && <div>Hello {user?.name} </div>}
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
             Investment Tracker
           </h1>

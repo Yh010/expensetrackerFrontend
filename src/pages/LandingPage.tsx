@@ -48,7 +48,7 @@ export default function LandingPage() {
           >
             Pricing
           </a>
-          <Link to="/app">Try the app now</Link>
+          <Link to="/">Try the app now</Link>
         </nav>
       </header>
       <main className="flex-1">

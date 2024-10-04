@@ -1,8 +1,13 @@
 import { DollarSignIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
+import LoginButton from "../Auth/Login";
+import LogoutButton from "../Auth/Logout";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function Navbar() {
+  const { isAuthenticated } = useAuth0();
+
   return (
     <nav className="bg-white dark:bg-gray-800 shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,6 +28,8 @@ function Navbar() {
               <Link to="/profile"> Profile</Link>
             </Button>
             <Button variant="ghost">Settings</Button>
+
+            {isAuthenticated ? <LogoutButton /> : <LoginButton />}
           </div>
         </div>
       </div>
