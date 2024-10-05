@@ -35,12 +35,28 @@ import {
 import { Label } from "@/components/ui/label";
 import { useAuth0 } from "@auth0/auth0-react";
 import StockNewsCard from "@/components/StockEdit/NewsCard";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { StockGraph } from "@/components/StockGraph/StockGraph";
 
 interface NewsLink {
   snippet: string;
   link: string;
   source: string;
   date: string;
+}
+
+interface Graph {
+  price: number;
+  currency: string;
+  date: string;
+  volume: number;
 }
 
 interface Stock {
@@ -51,12 +67,13 @@ interface Stock {
   currentPrice: number;
   amountInvested: number;
   news: NewsLink[];
+  graph: Graph[];
 }
 
 export default function InvestmentTracker() {
   const [stocks, setStocks] = useState<Stock[]>([]);
   const [newStock, setNewStock] = useState<
-    Omit<Stock, "id" | "currentPrice" | "news">
+    Omit<Stock, "id" | "currentPrice" | "news" | "graph">
   >({
     name: "",
     quantity: 0,
@@ -89,6 +106,7 @@ export default function InvestmentTracker() {
       return {
         currentPrice: priceNumber,
         news: data.news || [],
+        graph: data.graph || [],
       };
     } catch (error) {
       console.error("Error fetching current price:", error);
@@ -124,6 +142,7 @@ export default function InvestmentTracker() {
         id: Date.now(),
         currentPrice: stockData.currentPrice,
         news: stockData.news,
+        graph: stockData.graph,
       },
     ]);
     setNewStock({ name: "", quantity: 0, purchasePrice: 0, amountInvested: 0 });
@@ -223,6 +242,7 @@ export default function InvestmentTracker() {
                     <TableHead>Total Invested</TableHead>
                     <TableHead>Profit/Loss</TableHead>
                     <TableHead>Edit</TableHead>
+                    <TableHead>View Stock Performance</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -331,6 +351,21 @@ export default function InvestmentTracker() {
                               </SheetContent>
                             </Sheet>
                           </div>
+                        </TableCell>
+                        <TableCell>
+                          <Dialog>
+                            <DialogTrigger>Open Performance</DialogTrigger>
+                            <DialogContent>
+                              <DialogHeader>
+                                <DialogTitle>
+                                  Today's Performance with time stamps
+                                </DialogTitle>
+                                <DialogDescription>
+                                  <StockGraph />
+                                </DialogDescription>
+                              </DialogHeader>
+                            </DialogContent>
+                          </Dialog>
                         </TableCell>
                       </TableRow>
                     );
