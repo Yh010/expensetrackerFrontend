@@ -36,6 +36,13 @@ import { Label } from "@/components/ui/label";
 import { useAuth0 } from "@auth0/auth0-react";
 import StockNewsCard from "@/components/StockEdit/NewsCard";
 
+interface NewsLink {
+  snippet: string;
+  link: string;
+  source: string;
+  date: string;
+}
+
 interface Stock {
   id: number;
   name: string;
@@ -43,19 +50,25 @@ interface Stock {
   purchasePrice: number;
   currentPrice: number;
   amountInvested: number;
+  news: NewsLink[];
 }
 
 export default function InvestmentTracker() {
   const [stocks, setStocks] = useState<Stock[]>([]);
-  const [newStock, setNewStock] = useState<Omit<Stock, "id" | "currentPrice">>({
+  const [newStock, setNewStock] = useState<
+    Omit<Stock, "id" | "currentPrice" | "news">
+  >({
     name: "",
     quantity: 0,
     purchasePrice: 0,
     amountInvested: 0,
   });
   const [loading, setLoading] = useState(false);
+  const [selectedStockIndex, setSelectedStockIndex] = useState<number | null>(
+    null
+  );
 
-  const fetchCurrentPrice = async (stockQuote: string) => {
+  const fetchStockData = async (stockQuote: string) => {
     try {
       const response = await fetch("http://localhost:3000/data", {
         method: "POST",
@@ -73,7 +86,10 @@ export default function InvestmentTracker() {
       const priceString = data.price;
       const priceNumber = parseFloat(priceString.replace(/[₹,]/g, ""));
 
-      return priceNumber;
+      return {
+        currentPrice: priceNumber,
+        news: data.news || [],
+      };
     } catch (error) {
       console.error("Error fetching current price:", error);
       return null;
@@ -93,10 +109,10 @@ export default function InvestmentTracker() {
     }
 
     setLoading(true);
-    const currentPrice = await fetchCurrentPrice(newStock.name);
+    const stockData = await fetchStockData(newStock.name);
 
-    if (currentPrice === null) {
-      alert("Error fetching stock price. Try again later.");
+    if (stockData === null) {
+      alert("Error fetching stock data. Try again later.");
       setLoading(false);
       return;
     }
@@ -106,7 +122,8 @@ export default function InvestmentTracker() {
       {
         ...newStock,
         id: Date.now(),
-        currentPrice,
+        currentPrice: stockData.currentPrice,
+        news: stockData.news,
       },
     ]);
     setNewStock({ name: "", quantity: 0, purchasePrice: 0, amountInvested: 0 });
@@ -209,7 +226,7 @@ export default function InvestmentTracker() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {stocks.map((stock) => {
+                  {stocks.map((stock, index) => {
                     const investedAmount = stock.purchasePrice * stock.quantity;
                     const profitLoss =
                       (stock.currentPrice - stock.purchasePrice) *
@@ -250,16 +267,21 @@ export default function InvestmentTracker() {
                           <div className="flex space-x-2">
                             <Sheet key="right">
                               <SheetTrigger asChild>
-                                <Button variant="outline">
+                                <Button
+                                  variant="outline"
+                                  onClick={() => setSelectedStockIndex(index)}
+                                >
                                   <PenBox />
                                 </Button>
                               </SheetTrigger>
                               <SheetContent side="right">
                                 <SheetHeader>
-                                  <SheetTitle>Edit profile</SheetTitle>
+                                  <SheetTitle>
+                                    Stock Details: {stock.name}
+                                  </SheetTitle>
                                   <SheetDescription>
-                                    Make changes to your profile here. Click
-                                    save when you're done.
+                                    View details and news for the selected
+                                    stock.
                                   </SheetDescription>
                                 </SheetHeader>
                                 <div className="grid gap-4 py-4">
@@ -292,8 +314,12 @@ export default function InvestmentTracker() {
                                   <div>
                                     <div>News</div>
                                     <StockNewsCard
-                                    /* symbol={stockSymbol}
-                                      news={newsData} */
+                                      /* symbol={stockSymbol}*/
+                                      news={
+                                        selectedStockIndex !== null
+                                          ? stocks[selectedStockIndex].news
+                                          : []
+                                      }
                                     />
                                   </div>
                                 </div>
