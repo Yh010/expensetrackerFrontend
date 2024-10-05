@@ -115,7 +115,7 @@ const chartData = [
 
 const chartConfig = {
   views: {
-    label: "Page Views",
+    label: "Stock Price",
   },
   desktop: {
     label: "Desktop",
@@ -137,7 +137,7 @@ export function StockGraph() {
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
           <CardTitle>Chart</CardTitle>
           <CardDescription>
-            Showing stock Performance for the whole day
+            Showing stock Performance for the whole day October 05 2024
           </CardDescription>
         </div>
       </CardHeader>

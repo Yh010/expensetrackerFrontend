@@ -354,7 +354,9 @@ export default function InvestmentTracker() {
                         </TableCell>
                         <TableCell>
                           <Dialog>
-                            <DialogTrigger>Open Performance</DialogTrigger>
+                            <DialogTrigger className="border p-4 rounded-lg">
+                              Open Stock Performance
+                            </DialogTrigger>
                             <DialogContent>
                               <DialogHeader>
                                 <DialogTitle>
