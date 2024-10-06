@@ -128,8 +128,8 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function StockGraph() {
-  const [activeChart, setActiveChart] =
-    React.useState<keyof typeof chartConfig>("desktop");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [activeChart] = React.useState<keyof typeof chartConfig>("desktop");
 
   return (
     <Card>

@@ -167,7 +167,7 @@ export default function FinancialGoalTracker() {
                   <YAxis />
                   <Tooltip />
                   <Bar dataKey="value" fill="#8884d8">
-                    {expenseData.map((entry, index) => (
+                    {expenseData.map((_entry, index) => (
                       <Cell
                         key={`cell-${index}`}
                         fill={COLORS[index % COLORS.length]}
