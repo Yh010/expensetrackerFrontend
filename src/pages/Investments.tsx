@@ -44,6 +44,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { StockGraph } from "@/components/StockGraph/StockGraph";
+import { DownloadIcon } from "@radix-ui/react-icons";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface NewsLink {
   snippet: string;
@@ -229,7 +236,23 @@ export default function InvestmentTracker() {
 
           <Card className="mb-6">
             <CardHeader>
-              <CardTitle>Your Investments</CardTitle>
+              <CardTitle>
+                <div className="flex justify-between">
+                  <div>Your Investments</div>
+                  <div>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <DownloadIcon />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Download as CSV</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+                </div>
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <Table>
