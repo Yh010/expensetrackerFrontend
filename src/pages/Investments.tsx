@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import * as XLSX from "xlsx";
@@ -45,7 +45,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { StockGraph } from "@/components/StockGraph/StockGraph";
-import { DownloadIcon } from "@radix-ui/react-icons";
+import { DownloadIcon, UploadIcon } from "@radix-ui/react-icons";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -78,6 +78,13 @@ interface Stock {
   graph: Graph[];
 }
 
+interface UploadedStock {
+  name: string;
+  quantity: number;
+  purchasePrice: number;
+  currentPrice: number;
+}
+
 export default function InvestmentTracker() {
   const [stocks, setStocks] = useState<Stock[]>([]);
   const [newStock, setNewStock] = useState<
@@ -92,6 +99,8 @@ export default function InvestmentTracker() {
   const [selectedStockIndex, setSelectedStockIndex] = useState<number | null>(
     null
   );
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const fetchStockData = async (stockQuote: string) => {
     try {
@@ -220,6 +229,68 @@ export default function InvestmentTracker() {
     XLSX.writeFile(workbook, "investment_tracker.xlsx");
   };
 
+  const parseFile = (file: File): Promise<UploadedStock[]> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const data = e.target?.result;
+        try {
+          const workbook = XLSX.read(data, { type: "binary" });
+          const sheetName = workbook.SheetNames[0];
+          const sheet = workbook.Sheets[sheetName];
+          const parsedData = XLSX.utils.sheet_to_json(sheet);
+
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const stocks: UploadedStock[] = parsedData.map((row: any) => ({
+            name: row["Stock"],
+            quantity: Number(row["Quantity"]),
+            purchasePrice: Number(row["Purchase Price"]),
+            currentPrice: Number(row["Current Price"]),
+          }));
+
+          resolve(stocks);
+        } catch (error) {
+          reject(error);
+        }
+      };
+      reader.onerror = (error) => reject(error);
+      reader.readAsBinaryString(file);
+    });
+  };
+
+  const handleFileUpload = async (
+    file: File,
+    setStocks: React.Dispatch<React.SetStateAction<Stock[]>>
+  ) => {
+    try {
+      const uploadedStocks = await parseFile(file);
+      const newStocks: Stock[] = uploadedStocks.map((stock) => ({
+        id: Date.now() + Math.random(),
+        ...stock,
+        amountInvested: stock.quantity * stock.purchasePrice,
+        news: [],
+        graph: [],
+      }));
+      setStocks(newStocks);
+    } catch (error) {
+      console.error("Error parsing file:", error);
+      alert(
+        "Error parsing file. Please make sure it's a valid CSV or Excel file."
+      );
+    }
+  };
+
+  const triggerFileUpload = () => {
+    fileInputRef.current?.click();
+  };
+
+  const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      handleFileUpload(file, setStocks);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800">
       <Navbar />
@@ -286,22 +357,39 @@ export default function InvestmentTracker() {
               <CardTitle>
                 <div className="flex justify-between">
                   <div>Your Investments</div>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="outline" size="sm">
-                        <DownloadIcon className="mr-2 h-4 w-4" />
-                        Download
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuItem onClick={() => downloadCSV(stocks)}>
-                        Download as CSV
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => downloadExcel(stocks)}>
-                        Download as Excel
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <div className="flex space-x-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={triggerFileUpload}
+                    >
+                      <UploadIcon className="mr-2 h-4 w-4" />
+                      Upload
+                    </Button>
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      onChange={onFileChange}
+                      accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                      className="hidden"
+                    />
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline" size="sm">
+                          <DownloadIcon className="mr-2 h-4 w-4" />
+                          Download
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuItem onClick={() => downloadCSV(stocks)}>
+                          Download as CSV
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => downloadExcel(stocks)}>
+                          Download as Excel
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
                 </div>
               </CardTitle>
             </CardHeader>
