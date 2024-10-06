@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import * as XLSX from "xlsx";
 import {
   Table,
   TableBody,
@@ -46,11 +47,11 @@ import {
 import { StockGraph } from "@/components/StockGraph/StockGraph";
 import { DownloadIcon } from "@radix-ui/react-icons";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface NewsLink {
   snippet: string;
@@ -173,6 +174,52 @@ export default function InvestmentTracker() {
 
   const { user, isAuthenticated } = useAuth0();
 
+  const generateStockData = (stocks: Stock[]) => {
+    return stocks.map((stock) => {
+      const investedAmount = stock.purchasePrice * stock.quantity;
+      const profitLoss =
+        (stock.currentPrice - stock.purchasePrice) * stock.quantity;
+      const profitLossPercentage =
+        ((stock.currentPrice - stock.purchasePrice) / stock.purchasePrice) *
+        100;
+
+      return {
+        Stock: stock.name,
+        Quantity: stock.quantity,
+        "Purchase Price": stock.purchasePrice.toFixed(2),
+        "Current Price": stock.currentPrice.toFixed(2),
+        "Total Invested": investedAmount.toFixed(2),
+        "Profit/Loss": profitLoss.toFixed(2),
+        "Profit/Loss %": profitLossPercentage.toFixed(2),
+      };
+    });
+  };
+
+  const downloadCSV = (stocks: Stock[]) => {
+    const data = generateStockData(stocks);
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const csvOutput = XLSX.utils.sheet_to_csv(worksheet);
+    const blob = new Blob([csvOutput], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    if (link.download !== undefined) {
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", "investment_tracker.csv");
+      link.style.visibility = "hidden";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
+
+  const downloadExcel = (stocks: Stock[]) => {
+    const data = generateStockData(stocks);
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Investments");
+    XLSX.writeFile(workbook, "investment_tracker.xlsx");
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800">
       <Navbar />
@@ -239,18 +286,22 @@ export default function InvestmentTracker() {
               <CardTitle>
                 <div className="flex justify-between">
                   <div>Your Investments</div>
-                  <div>
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger>
-                          <DownloadIcon />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>Download as CSV</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </div>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline" size="sm">
+                        <DownloadIcon className="mr-2 h-4 w-4" />
+                        Download
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuItem onClick={() => downloadCSV(stocks)}>
+                        Download as CSV
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => downloadExcel(stocks)}>
+                        Download as Excel
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
               </CardTitle>
             </CardHeader>
