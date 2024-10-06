@@ -436,7 +436,19 @@ export default function InvestmentTracker() {
               totalAmountInvested={totalInvested}
             />
             <ProfitLossChart />
-            <InvestmentShowcaseCard data={investmentData} />
+
+            <Dialog>
+              <DialogTrigger className="border p-4 rounded-lg border-black max-h-[50px]">
+                Generate your card
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogDescription>
+                    <InvestmentShowcaseCard data={investmentData} />
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
       </main>
