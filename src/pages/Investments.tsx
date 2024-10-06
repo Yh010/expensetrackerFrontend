@@ -362,7 +362,7 @@ export default function InvestmentTracker() {
                             <Sheet key="right">
                               <SheetTrigger asChild>
                                 <Button
-                                  variant="outline"
+                                  variant="ghost"
                                   onClick={() => setSelectedStockIndex(index)}
                                 >
                                   <PenBox />
