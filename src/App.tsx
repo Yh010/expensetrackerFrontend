@@ -4,6 +4,7 @@ import LandingPage from "./pages/LandingPage";
 import FinancialGoalTracker from "./pages/Goals";
 import UserProfile from "./pages/ProfilePage";
 
+/* just testing if CI workflow works */
 function App() {
   return (
     <BrowserRouter>
