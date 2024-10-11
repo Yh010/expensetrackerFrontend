@@ -44,6 +44,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import GoBack from "@/components/GoBack";
 //import { useStore } from "zustand";
 import { useUserStore } from "@/store/store";
+import { EditUserProfile } from "@/components/ProfilePage/EditProfile";
 
 const spendingData = [
   { category: "Housing", amount: 1200 },
@@ -82,7 +83,7 @@ export default function UserProfile() {
           </div>
         </div>
         <GoBack />
-        <Button>Edit Profile</Button>
+        <EditUserProfile />
       </div>
 
       <Tabs defaultValue="overview" className="w-full">
