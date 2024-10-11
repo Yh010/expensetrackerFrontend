@@ -52,6 +52,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import UploadPic from "@/components/UploadPic/upload";
 
 interface NewsLink {
   snippet: string;
@@ -611,6 +612,7 @@ export default function InvestmentTracker() {
                 </DialogHeader>
               </DialogContent>
             </Dialog>
+            <UploadPic />
           </div>
         </div>
       </main>
