@@ -288,10 +288,11 @@ export default function UserProfile() {
             </Button>
           </CardFooter>
         </Card>
-        <div>
+        <div className="border">
           <label>
             {username}
             <input
+              className="border"
               // Update the "firstName" state
               onChange={(e) => setUsername(e.currentTarget.value)}
               value={username}
