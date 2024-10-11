@@ -41,6 +41,9 @@ import {
   Tooltip,
 } from "recharts";
 import { useAuth0 } from "@auth0/auth0-react";
+import GoBack from "@/components/GoBack";
+//import { useStore } from "zustand";
+import { useUserStore } from "@/store/store";
 
 const spendingData = [
   { category: "Housing", amount: 1200 },
@@ -62,6 +65,10 @@ export default function UserProfile() {
     .map((part) => part[0])
     .join("");
 
+  // const user = useStore((state:any) => state.user);
+  const username = useUserStore((state) => state.user.username);
+  const setUsername = useUserStore((state) => state.setUserName);
+
   return (
     <div className="container mx-auto p-4 space-y-8">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
@@ -74,6 +81,7 @@ export default function UserProfile() {
             <h1 className="text-2xl font-bold">{user?.name}</h1>
           </div>
         </div>
+        <GoBack />
         <Button>Edit Profile</Button>
       </div>
 
@@ -279,6 +287,16 @@ export default function UserProfile() {
             </Button>
           </CardFooter>
         </Card>
+        <div>
+          <label>
+            {username}
+            <input
+              // Update the "firstName" state
+              onChange={(e) => setUsername(e.currentTarget.value)}
+              value={username}
+            />
+          </label>
+        </div>
       </div>
     </div>
   );
