@@ -45,6 +45,7 @@ import GoBack from "@/components/GoBack";
 //import { useStore } from "zustand";
 import { useUserStore } from "@/store/store";
 import { EditUserProfile } from "@/components/ProfilePage/EditProfile";
+import Navbar from "@/components/Navbar/Navbar";
 
 const spendingData = [
   { category: "Housing", amount: 1200 },
@@ -72,6 +73,7 @@ export default function UserProfile() {
 
   return (
     <div className="container mx-auto p-4 space-y-8">
+      <Navbar />
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
         <div className="flex items-center space-x-4">
           <Avatar className="h-20 w-20">

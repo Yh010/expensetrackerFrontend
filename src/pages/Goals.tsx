@@ -23,6 +23,7 @@ import {
   LineChart as RechartsLineChart,
   Line,
 } from "recharts";
+import Navbar from "@/components/Navbar/Navbar";
 
 const goalData = [
   { name: "Emergency Fund", current: 5000, target: 10000, color: "#FF6384" },
@@ -58,6 +59,7 @@ const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8"];
 export default function FinancialGoalTracker() {
   return (
     <div className="container mx-auto p-4 space-y-8">
+      <Navbar />
       <h1 className="text-3xl font-bold text-center mb-8">
         Financial Goal Tracker
       </h1>
