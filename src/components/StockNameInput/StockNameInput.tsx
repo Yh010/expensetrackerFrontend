@@ -13,21 +13,29 @@ import {
 export function StockNameInput() {
   return (
     <Command className="rounded-lg border shadow-md md:min-w-[450px]">
-      <CommandInput placeholder="Type a command or search..." />
+      <CommandInput placeholder="Type a Stock name..." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Suggestions">
           <CommandItem>
             <Calendar className="mr-2 h-4 w-4" />
-            <span>Calendar</span>
+            <span>Asian Paints</span>
           </CommandItem>
           <CommandItem>
             <Smile className="mr-2 h-4 w-4" />
-            <span>Search Emoji</span>
+            <span>Cipla</span>
           </CommandItem>
-          <CommandItem disabled>
+          <CommandItem>
             <Calculator className="mr-2 h-4 w-4" />
-            <span>Calculator</span>
+            <span>Eicher Motors</span>
+          </CommandItem>
+          <CommandItem>
+            <Calculator className="mr-2 h-4 w-4" />
+            <span>Nestle India</span>
+          </CommandItem>
+          <CommandItem>
+            <Calculator className="mr-2 h-4 w-4" />
+            <span>Ambuja Cements</span>
           </CommandItem>
         </CommandGroup>
         <CommandSeparator />
