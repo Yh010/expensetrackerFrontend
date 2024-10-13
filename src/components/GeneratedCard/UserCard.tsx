@@ -18,8 +18,7 @@ import {
   EyeOff,
 } from "lucide-react";
 import confetti from "canvas-confetti";
-import { toPng } from "html-to-image";
-
+import html2canvas from "html2canvas";
 type InvestorRank =
   | "Novice"
   | "Intermediate"
@@ -69,23 +68,16 @@ export default function InvestmentShowcaseCard({
   const handleDownload = async () => {
     if (elementRef.current) {
       try {
-        const dataUrl = await toPng(elementRef.current, { cacheBust: false });
+        const canvas = await html2canvas(elementRef.current, { useCORS: true });
+        const dataUrl = canvas.toDataURL("image/png");
         const link = document.createElement("a");
         link.download = "my-investment-showcase.png";
         link.href = dataUrl;
         link.click();
       } catch (err) {
-        console.log(err);
+        console.log("Error generating image:", err);
       }
     }
-    /* const element = document.getElementById("investment-card");
-    if (element) {
-      const dataUrl = await toPng(element);
-      const link = document.createElement("a");
-      link.download = "my-investment-showcase.png";
-      link.href = dataUrl;
-      link.click();
-    } */
   };
 
   const handleShare = () => {
