@@ -27,7 +27,9 @@ function Navbar() {
             <Button variant="ghost">
               <Link to="/profile"> Profile</Link>
             </Button>
-            <Button variant="ghost">Settings</Button>
+            <Button variant="ghost">
+              <Link to="/goals">Goals</Link>
+            </Button>
 
             {isAuthenticated ? <LogoutButton /> : <LoginButton />}
           </div>
