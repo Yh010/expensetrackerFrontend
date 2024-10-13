@@ -53,6 +53,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import UploadPic from "@/components/UploadPic/upload";
+import { StockNameInput } from "@/components/StockNameInput/StockNameInput";
 
 interface NewsLink {
   snippet: string;
@@ -317,6 +318,7 @@ export default function InvestmentTracker() {
                   }
                   className="flex-grow"
                 />
+                <StockNameInput />
                 <Input
                   type="number"
                   placeholder="Quantity"
