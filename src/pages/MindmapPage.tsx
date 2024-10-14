@@ -17,6 +17,7 @@ import "@xyflow/react/dist/style.css";
 import MindMapNode from "@/components/MindMap/MindMapNode";
 import MindMapEdge from "@/components/MindMap/MindMapEdge";
 import { type RFState, useFlowStore } from "@/store/store";
+import Navbar from "@/components/Navbar/Navbar";
 
 const selector = (state: RFState) => ({
   nodes: state.nodes,
@@ -106,6 +107,7 @@ export default function MindmapPage() {
 
   return (
     <div className="h-screen w-full">
+      <Navbar />
       <ReactFlow
         nodes={nodes}
         edges={edges}

@@ -30,6 +30,9 @@ function Navbar() {
             <Button variant="ghost">
               <Link to="/goals">Goals</Link>
             </Button>
+            <Button variant="ghost">
+              <Link to="/mindmap">Roadmap</Link>
+            </Button>
 
             {isAuthenticated ? <LogoutButton /> : <LoginButton />}
           </div>
