@@ -3,6 +3,7 @@ import InvestmentTracker from "./pages/Investments";
 import LandingPage from "./pages/LandingPage";
 import FinancialGoalTracker from "./pages/Goals";
 import UserProfile from "./pages/ProfilePage";
+import MindmapPage from "./pages/MindmapPage";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<InvestmentTracker />} />
         <Route path="/goals" element={<FinancialGoalTracker />} />
         <Route path="/profile" element={<UserProfile />} />
+        <Route path="/mindmap" element={<MindmapPage />} />
       </Routes>
     </BrowserRouter>
   );
