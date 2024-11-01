@@ -23,12 +23,15 @@ export default function LandingPage() {
   const [email, setEmail] = useState("");
 
   return (
-    <div className="flex flex-col min-h-screen items-center">
-      <header className="px-4 lg:px-6 h-14 flex items-center">
-        <a className="flex items-center justify-center" href="#">
-          <LineChart className="h-6 w-6" />
-          <span className="sr-only">InvestTrack</span>
-        </a>
+    <div className="flex flex-col min-h-screen items-center  ">
+      <header className="px-4 lg:px-6 h-14 flex items-center bg-neutral-800 text-white justify-between w-full">
+        <div>
+          <a className="flex items-center justify-center" href="#">
+            <LineChart className="h-6 w-6" />
+            <span className="sr-only">InvestTrack</span>
+          </a>
+        </div>
+       
         <nav className="ml-auto flex gap-4 sm:gap-6">
           <a
             className="text-sm font-medium hover:underline underline-offset-4"
@@ -52,6 +55,31 @@ export default function LandingPage() {
         </nav>
       </header>
       <main className="flex-1">
+        <section className="flex justify-center items-center p-6">
+          <div className="flex space-x-16 font-bold text-xl justify-evenly">
+            <div>Chevron</div>
+            <div>Shell</div>
+            <div>Ferrari</div>
+            <div>Rolex</div>
+            <div>Apple</div>
+          </div>
+        </section>
+        <section className="flex">
+          <div className="w-1/2 flex flex-col text-left justify-start items-center pt-32 space-y-9 pl-24">
+            <div className="w-full text-7xl font-bold font-mono">
+              Invest with Confidence
+            </div>
+            <div className="w-full font-semibold text-gray-400">
+              Welcome to our investment tracker website! Here, you can easily monitor your portfolio's performance and access key metrics to make informed financial 
+            </div>
+            <Button>
+              Track Portfolio
+            </Button>
+          </div>
+          <div className="flex justify-center items-center">
+            <img src="/public/invest.webp" className="w-3/4 h-5/6 "/>
+          </div>
+        </section>
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-b from-blue-50 to-white">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
