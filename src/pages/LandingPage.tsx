@@ -13,6 +13,10 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import invest from "../assets/invest.webp"
+import clock from "../assets/clock.webp"
+import elevate from "../assets/elevate.webp"
+import future from "../assets/future.webp"
 
 
 export default function LandingPage() {
@@ -66,7 +70,7 @@ export default function LandingPage() {
             </Button>
           </div>
           <div className="flex justify-center items-center">
-            <img src="/public/invest.webp" className="w-3/4 h-5/6 "/>
+            <img src={ invest} className="w-3/4 h-5/6 "/>
           </div>
         </section>
         <section className="space-y-6">
@@ -110,7 +114,7 @@ export default function LandingPage() {
         </section>
         <section className="flex">
           <div className="flex justify-center items-center">
-            <img src="/public/clock.webp" className="w-3/4 h-5/6 "/>
+            <img src={clock} className="w-3/4 h-5/6 "/>
           </div>
           <div className="w-1/2 flex flex-col text-left justify-start items-center pt-32 space-y-9 pr-24">
              <div className="w-full font-semibold text-gray-400">
@@ -143,12 +147,12 @@ export default function LandingPage() {
             </Button>
           </div>
           <div className="flex justify-center items-center">
-            <img src="/public/future.webp" className="w-3/4 h-5/6 "/>
+            <img src={ future} className="w-3/4 h-5/6 "/>
           </div>
         </section>
         <section className="flex">
           <div className="flex justify-center items-center">
-            <img src="/public/elevate.webp" className="w-3/4 h-5/6 "/>
+            <img src={ elevate} className="w-3/4 h-5/6 "/>
           </div>
           <div className="w-1/2 flex flex-col text-left justify-start items-center pt-32 space-y-9 pr-24">
              <div className="w-full font-semibold text-gray-400">
