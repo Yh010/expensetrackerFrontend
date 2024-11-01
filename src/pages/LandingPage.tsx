@@ -80,6 +80,64 @@ export default function LandingPage() {
             <img src="/public/invest.webp" className="w-3/4 h-5/6 "/>
           </div>
         </section>
+        <section className="space-y-6">
+          <div className="w-full flex justify-center items-center font-bold font-mono text-4xl">
+            Personalized Insights
+          </div>
+          <div className="w-full flex justify-center items-center space-x-6">
+            <Card className="max-w-64 border border-black">
+              <CardHeader className="font-bold font-mono text-xl">
+                Asset Allocation
+              </CardHeader>
+              <CardContent className="font-semibold text-gray-400">
+                Our cutting-edge analytics provide a comprehensive view of your portfolio, empowering you to optimize your investment strategy and maximize your returns
+              </CardContent>
+            </Card>
+               <Card className="max-w-64 border border-black">
+              <CardHeader className="font-bold font-mono text-xl">
+               Portfolio
+              </CardHeader>
+              <CardContent className="font-semibold text-gray-400">
+                Leverage our advanced tools to ensure your investments are balanced and aligned with your financial goals, reducing risk and maximizing
+              </CardContent>
+            </Card>
+               <Card className="max-w-64 border border-black">
+              <CardHeader className="font-bold font-mono text-xl">
+               Performance
+              </CardHeader>
+              <CardContent className="font-semibold text-gray-400">
+                Stay on top of your portfolio's performance with real-time updates and historical data, allowing you to make timely adjustments and capitalize on market 
+              </CardContent>
+            </Card>
+              <Card className="max-w-64 border border-black">
+              <CardHeader className="font-bold font-mono text-xl">
+               Key Metrics
+              </CardHeader>
+              <CardContent className="font-semibold text-gray-400">
+                Gain valuable insights into your portfolio's health, including returns, risk levels, and sector exposure, to make informed investment decisions
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+        <section className="flex">
+          <div className="flex justify-center items-center">
+            <img src="/public/clock.webp" className="w-3/4 h-5/6 "/>
+          </div>
+          <div className="w-1/2 flex flex-col text-left justify-start items-center pt-32 space-y-9 pr-24">
+             <div className="w-full font-semibold text-gray-400">
+              Time to invest
+            </div>
+            <div className="w-full text-5xl font-semibold font-mono">
+             Market Outlook
+            </div>
+            <div className="w-full font-semibold text-gray-400">
+              Explore the latest market trends, economic indicators, and expert analysis to stay ahead of the curve and seize the right investment opportunities at the right time
+            </div>
+            <Button>
+              Track Portfolio
+            </Button>
+          </div>
+        </section>
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-b from-blue-50 to-white">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
