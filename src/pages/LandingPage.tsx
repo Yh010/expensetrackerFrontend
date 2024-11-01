@@ -11,11 +11,8 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  BarChart,
   LineChart,
-  ArrowUpRight,
   CheckCircle,
-  Lock,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -157,6 +154,25 @@ export default function LandingPage() {
             <img src="/public/future.webp" className="w-3/4 h-5/6 "/>
           </div>
         </section>
+        <section className="flex">
+          <div className="flex justify-center items-center">
+            <img src="/public/elevate.webp" className="w-3/4 h-5/6 "/>
+          </div>
+          <div className="w-1/2 flex flex-col text-left justify-start items-center pt-32 space-y-9 pr-24">
+             <div className="w-full font-semibold text-gray-400">
+              Unlock Your Potential
+            </div>
+            <div className="w-full text-5xl font-semibold font-mono">
+            Elevate Your Investments
+            </div>
+            <div className="w-full font-semibold text-gray-400">
+              Leverage our advanced analytics and cutting-edge tools to unlock the full potential of your portfolio. Gain deep insights, identify growth opportunities, and make strategic decisions that propel your wealth to new heights.
+            </div>
+            <Button>
+              Optimize Now
+            </Button>
+          </div>
+        </section>
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-b from-blue-50 to-white">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
@@ -190,54 +206,7 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
-        <section
-          id="features"
-          className="w-full py-12 md:py-24 lg:py-32 bg-white"
-        >
-          <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">
-              Powerful Features
-            </h2>
-            <div className="grid gap-6 lg:grid-cols-3 lg:gap-12">
-              <Card>
-                <CardHeader>
-                  <BarChart className="h-10 w-10 mb-4 text-blue-500" />
-                  <CardTitle>Advanced Analytics</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p>
-                    Gain deep insights into your portfolio performance with our
-                    advanced analytics tools.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <ArrowUpRight className="h-10 w-10 mb-4 text-blue-500" />
-                  <CardTitle>Real-time Tracking</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p>
-                    Stay up-to-date with real-time tracking of your investments
-                    across multiple markets.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <Lock className="h-10 w-10 mb-4 text-blue-500" />
-                  <CardTitle>Bank-level Security</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p>
-                    Rest easy knowing your data is protected with our
-                    state-of-the-art security measures.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
+
         <section
           id="testimonials"
           className="w-full py-12 md:py-24 lg:py-32 bg-gray-100"
@@ -473,7 +442,7 @@ export default function LandingPage() {
       </main>
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
         <p className="text-xs text-gray-500 dark:text-gray-400">
-          © 2024 InvestTrack. All rights reserved.
+          © 2024 InvestTrack by Yash Hegde. All rights reserved.
         </p>
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
           <a className="text-xs hover:underline underline-offset-4" href="#">
