@@ -1,6 +1,4 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Card,
   CardContent,
@@ -16,8 +14,8 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
+
 export default function LandingPage() {
-  const [email, setEmail] = useState("");
 
   return (
     <div className="flex flex-col min-h-screen items-center  ">
@@ -185,23 +183,8 @@ export default function LandingPage() {
                   our powerful, user-friendly platform.
                 </p>
               </div>
-              <div className="w-full max-w-sm space-y-2">
-                <form
-                  className="flex space-x-2"
-                  onSubmit={(e) => e.preventDefault()}
-                >
-                  <Input
-                    className="max-w-lg flex-1"
-                    placeholder="Enter your email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                  <Button type="submit">Get Started</Button>
-                </form>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
-                  Start your free 14-day trial. No credit card required.
-                </p>
+              <div className="w-full max-w-sm space-y-2 flex justify-center">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeiq1dSVC3kS3Im8CbU-l6wnP5KdkML61G3kVNzx3W0ud0NPA/viewform?embedded=true" width="100%" height="418" frameBorder="0">Loading…</iframe>
               </div>
             </div>
           </div>
