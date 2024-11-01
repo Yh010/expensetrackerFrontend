@@ -138,6 +138,25 @@ export default function LandingPage() {
             </Button>
           </div>
         </section>
+         <section className="flex">
+          <div className="w-1/2 flex flex-col text-left justify-start items-center pt-32 space-y-9 pl-24">
+             <div className="w-full font-semibold text-green-700">
+              Grow Your Wealth
+            </div>
+            <div className="w-full text-7xl font-bold font-mono">
+              Secure Your Financial Future
+            </div>
+            <div className="w-full font-semibold text-gray-400">
+             Our investment tracker empowers you to take control of your financial destiny. By providing a comprehensive view of your portfolio, we help you make informed decisions, optimize your investments, and confidently navigate the ever-evolving market landscape.
+            </div>
+            <Button>
+              Start Investing
+            </Button>
+          </div>
+          <div className="flex justify-center items-center">
+            <img src="/public/future.webp" className="w-3/4 h-5/6 "/>
+          </div>
+        </section>
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-b from-blue-50 to-white">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
