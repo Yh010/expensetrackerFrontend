@@ -30,12 +30,6 @@ export default function LandingPage() {
         <nav className="ml-auto flex gap-4 sm:gap-6">
           <a
             className="text-sm font-medium hover:underline underline-offset-4"
-            href="#features"
-          >
-            Features
-          </a>
-          <a
-            className="text-sm font-medium hover:underline underline-offset-4"
             href="#testimonials"
           >
             Testimonials
@@ -181,6 +175,9 @@ export default function LandingPage() {
                 <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
                   Effortlessly manage and analyze your investment portfolio with
                   our powerful, user-friendly platform.
+                </p>
+                 <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
+                 Register now for early access!
                 </p>
               </div>
               <div className="w-full max-w-sm space-y-2 flex justify-center">

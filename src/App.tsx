@@ -9,8 +9,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/landing" element={<LandingPage />} />
-        <Route path="/" element={<InvestmentTracker />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/app" element={<InvestmentTracker />} />
         <Route path="/goals" element={<FinancialGoalTracker />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/mindmap" element={<MindmapPage />} />
