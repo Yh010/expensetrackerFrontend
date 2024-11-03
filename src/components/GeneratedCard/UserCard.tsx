@@ -19,6 +19,12 @@ import {
 } from "lucide-react";
 import confetti from "canvas-confetti";
 import html2canvas from "html2canvas";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 type InvestorRank =
   | "Novice"
   | "Intermediate"
@@ -80,13 +86,13 @@ export default function InvestmentShowcaseCard({
     }
   };
 
-  const handleShare = () => {
-    const shareUrl = `https://investtrack.com/share/${btoa(
-      JSON.stringify(data)
-    )}`;
-    navigator.clipboard.writeText(shareUrl);
-    alert("Share link copied to clipboard!");
-  };
+  // const handleShare = () => {
+  //   const shareUrl = `https://investtrack.com/share/${btoa(
+  //     JSON.stringify(data)
+  //   )}`;
+  //   navigator.clipboard.writeText(shareUrl);
+  //   alert("Share link copied to clipboard!");
+  // };
 
   const triggerConfetti = () => {
     confetti({
@@ -112,14 +118,23 @@ export default function InvestmentShowcaseCard({
           >
             <Download className="h-4 w-4" />
           </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={handleShare}
-            className="rounded-full bg-white border-2 border-black hover:bg-gray-100"
-          >
-            <Share2 className="h-4 w-4" />
-          </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  // onClick={handleShare}
+                  className="rounded-full bg-white border-2 border-black hover:bg-gray-100"
+                >
+                  <Share2 className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Shareable feature coming soon!</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
         <CardTitle className="text-3xl font-extrabold text-center text-black pt-6">
           Investment Showcase

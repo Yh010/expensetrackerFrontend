@@ -21,7 +21,6 @@ import {
 } from "lucide-react";
 import { TotalInvestmentChart } from "@/components/TotalInvestmentPieChart";
 import InvestmentShowcaseCard from "@/components/GeneratedCard/UserCard";
-import { ProfitLossChart } from "@/components/ProfitLossPieChart";
 import Navbar from "@/components/Navbar/Navbar";
 import {
   Sheet,
@@ -183,9 +182,10 @@ export default function InvestmentTracker() {
   );
   const totalProfitLoss = totalCurrent - totalInvested;
 
+  //here
   const investmentData = {
-    totalInvestment: 50000,
-    totalProfit: 15000,
+    totalInvestment: Number(totalInvested.toFixed(2)),
+    totalProfit: Number(Math.abs(totalProfitLoss).toFixed(2)),
   };
 
   const { user, isAuthenticated } = useAuth0();
@@ -604,8 +604,6 @@ export default function InvestmentTracker() {
                   stocks={stocks}
                   totalAmountInvested={totalInvested}
                 />
-                <ProfitLossChart />
-
                 <Dialog>
                   <DialogTrigger className="border p-4 rounded-lg border-black max-h-[50px]">
                     Generate your card
