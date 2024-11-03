@@ -11,18 +11,17 @@ interface NewsLink {
 }
 
 interface NewsLinkArray {
+  stockName: string;
   news: NewsLink[];
 }
 
-export default function StockNewsCard({ news }: NewsLinkArray) {
-  const stockSymbol = "AAPL";
-
+export default function StockNewsCard({ news, stockName }: NewsLinkArray) {
   return (
     <Card className="w-full max-w-2xl">
       <CardHeader className="bg-gray-100 dark:bg-gray-800">
         <CardTitle className="flex items-center space-x-2">
           <Newspaper className="h-5 w-5" />
-          <span>{stockSymbol} Recent News</span>
+          <span>{stockName} Recent News</span>
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0">

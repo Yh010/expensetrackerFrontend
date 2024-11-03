@@ -17,7 +17,7 @@ import {
   TrendingDownIcon,
   PercentIcon,
   IndianRupeeIcon,
-  PenBox,
+  NewspaperIcon,
 } from "lucide-react";
 import { TotalInvestmentChart } from "@/components/TotalInvestmentPieChart";
 import InvestmentShowcaseCard from "@/components/GeneratedCard/UserCard";
@@ -431,7 +431,7 @@ export default function InvestmentTracker() {
                         <TableHead>Current Price</TableHead>
                         <TableHead>Total Invested</TableHead>
                         <TableHead>Profit/Loss</TableHead>
-                        <TableHead>Edit</TableHead>
+                        <TableHead>Stock News</TableHead>
                         <TableHead>View Stock Performance</TableHead>
                       </TableRow>
                     </TableHeader>
@@ -488,7 +488,7 @@ export default function InvestmentTracker() {
                                         setSelectedStockIndex(index)
                                       }
                                     >
-                                      <PenBox />
+                                      <NewspaperIcon />
                                     </Button>
                                   </SheetTrigger>
                                   <SheetContent side="right">
@@ -502,36 +502,10 @@ export default function InvestmentTracker() {
                                       </SheetDescription>
                                     </SheetHeader>
                                     <div className="grid gap-4 py-4">
-                                      <div className="grid grid-cols-4 items-center gap-4">
-                                        <Label
-                                          htmlFor="name"
-                                          className="text-right"
-                                        >
-                                          Name
-                                        </Label>
-                                        <Input
-                                          id="name"
-                                          value="Pedro Duarte"
-                                          className="col-span-3"
-                                        />
-                                      </div>
-                                      <div className="grid grid-cols-4 items-center gap-4">
-                                        <Label
-                                          htmlFor="username"
-                                          className="text-right"
-                                        >
-                                          Username
-                                        </Label>
-                                        <Input
-                                          id="username"
-                                          value="@peduarte"
-                                          className="col-span-3"
-                                        />
-                                      </div>
                                       <div>
                                         <div>News</div>
                                         <StockNewsCard
-                                          /* symbol={stockSymbol}*/
+                                          stockName={stock.name}
                                           news={
                                             selectedStockIndex !== null
                                               ? stocks[selectedStockIndex].news
@@ -540,13 +514,6 @@ export default function InvestmentTracker() {
                                         />
                                       </div>
                                     </div>
-                                    <SheetFooter>
-                                      <SheetClose asChild>
-                                        <Button type="submit">
-                                          Save changes
-                                        </Button>
-                                      </SheetClose>
-                                    </SheetFooter>
                                   </SheetContent>
                                 </Sheet>
                               </div>
