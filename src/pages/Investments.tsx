@@ -170,6 +170,7 @@ export default function InvestmentTracker() {
     ]);
     setNewStock({ name: "", quantity: 0, purchasePrice: 0, amountInvested: 0 });
     setLoading(false);
+    console.log(stocks);
   };
 
   const totalInvested = stocks.reduce(
@@ -526,7 +527,13 @@ export default function InvestmentTracker() {
                                       Today's Performance with time stamps
                                     </DialogTitle>
                                     <DialogDescription>
-                                      <StockGraph />
+                                      <StockGraph
+                                        graph={
+                                          selectedStockIndex !== null
+                                            ? stocks[selectedStockIndex].graph
+                                            : []
+                                        }
+                                      />
                                     </DialogDescription>
                                   </DialogHeader>
                                 </DialogContent>

@@ -17,65 +17,75 @@ import {
 } from "@/components/ui/card";
 import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 
+interface Graph {
+  price: number;
+  currency: string;
+  date: string;
+  volume: number;
+}
+
+interface GraphData {
+  graph: Graph[];
+}
 export const description = "An interactive line chart";
 
 // Transformed chart data (adjust this according to your data)
-const chartData = [
-  {
-    date: "Oct 01 2024, 09:15 AM UTC+05:00",
-    price: 2964.0,
-    volume: 5,
-    currency: "INR",
-  },
-  {
-    date: "Oct 01 2024, 09:16 AM UTC+05:00",
-    price: 7975.65,
-    volume: 3642,
-    currency: "INR",
-  },
-  {
-    date: "Oct 01 2024, 09:17 AM UTC+05:00",
-    price: 3971.5,
-    volume: 1787,
-    currency: "INR",
-  },
-  {
-    date: "Oct 01 2024, 09:18 AM UTC+05:00",
-    price: 6971.4,
-    volume: 1185,
-    currency: "INR",
-  },
-  {
-    date: "Oct 01 2024, 09:19 AM UTC+05:00",
-    price: 2907.7,
-    volume: 1031,
-    currency: "INR",
-  },
-  {
-    date: "Oct 01 2024, 09:20 AM UTC+05:00",
-    price: 2467.7,
-    volume: 1031,
-    currency: "INR",
-  },
-  {
-    date: "Oct 01 2024, 09:21 AM UTC+05:00",
-    price: 1967.7,
-    volume: 1031,
-    currency: "INR",
-  },
-  {
-    date: "Oct 01 2024, 09:22 AM UTC+05:00",
-    price: 367.7,
-    volume: 101,
-    currency: "INR",
-  },
-  {
-    date: "Oct 01 2024, 09:23 AM UTC+05:00",
-    price: 2367.7,
-    volume: 1031,
-    currency: "INR",
-  },
-];
+// const chartData = [
+//   {
+//     date: "Oct 01 2024, 09:15 AM UTC+05:00",
+//     price: 2964.0,
+//     volume: 5,
+//     currency: "INR",
+//   },
+//   {
+//     date: "Oct 01 2024, 09:16 AM UTC+05:00",
+//     price: 7975.65,
+//     volume: 3642,
+//     currency: "INR",
+//   },
+//   {
+//     date: "Oct 01 2024, 09:17 AM UTC+05:00",
+//     price: 3971.5,
+//     volume: 1787,
+//     currency: "INR",
+//   },
+//   {
+//     date: "Oct 01 2024, 09:18 AM UTC+05:00",
+//     price: 6971.4,
+//     volume: 1185,
+//     currency: "INR",
+//   },
+//   {
+//     date: "Oct 01 2024, 09:19 AM UTC+05:00",
+//     price: 2907.7,
+//     volume: 1031,
+//     currency: "INR",
+//   },
+//   {
+//     date: "Oct 01 2024, 09:20 AM UTC+05:00",
+//     price: 2467.7,
+//     volume: 1031,
+//     currency: "INR",
+//   },
+//   {
+//     date: "Oct 01 2024, 09:21 AM UTC+05:00",
+//     price: 1967.7,
+//     volume: 1031,
+//     currency: "INR",
+//   },
+//   {
+//     date: "Oct 01 2024, 09:22 AM UTC+05:00",
+//     price: 367.7,
+//     volume: 101,
+//     currency: "INR",
+//   },
+//   {
+//     date: "Oct 01 2024, 09:23 AM UTC+05:00",
+//     price: 2367.7,
+//     volume: 1031,
+//     currency: "INR",
+//   },
+// ];
 
 const chartConfig = {
   views: {
@@ -91,7 +101,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function StockGraph() {
+export function StockGraph({ graph }: GraphData) {
   const [activeChart] = React.useState<keyof typeof chartConfig>("desktop");
 
   return (
@@ -100,7 +110,7 @@ export function StockGraph() {
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
           <CardTitle>Chart</CardTitle>
           <CardDescription>
-            Showing stock performance for the whole day October 01 2024
+            Showing stock performance for the whole day
           </CardDescription>
         </div>
       </CardHeader>
@@ -111,7 +121,7 @@ export function StockGraph() {
         >
           <LineChart
             accessibilityLayer
-            data={chartData}
+            data={graph}
             margin={{
               left: 12,
               right: 12,
