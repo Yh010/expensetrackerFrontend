@@ -8,19 +8,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  LineChart,
-  CheckCircle,
-} from "lucide-react";
+import { LineChart, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
-import invest from "../assets/invest.webp"
-import clock from "../assets/clock.webp"
-import elevate from "../assets/elevate.webp"
-import future from "../assets/future.webp"
-
+import invest from "../assets/invest.webp";
+import clock from "../assets/clock.webp";
+import elevate from "../assets/elevate.webp";
+import future from "../assets/future.webp";
 
 export default function LandingPage() {
-
   return (
     <div className="flex flex-col min-h-screen items-center  ">
       <header className="px-4 lg:px-6 h-14 flex items-center bg-neutral-800 text-white justify-between w-full">
@@ -30,7 +25,7 @@ export default function LandingPage() {
             <span className="sr-only">InvestTrack</span>
           </a>
         </div>
-       
+
         <nav className="ml-auto flex gap-4 sm:gap-6">
           <a
             className="text-sm font-medium hover:underline underline-offset-4"
@@ -44,7 +39,7 @@ export default function LandingPage() {
           >
             Pricing
           </a>
-          <Link to="/">Try the app now</Link>
+          <Link to="/app">Try the app now</Link>
         </nav>
       </header>
       <main className="flex-1">
@@ -63,14 +58,14 @@ export default function LandingPage() {
               Invest with Confidence
             </div>
             <div className="w-full font-semibold text-gray-400">
-              Welcome to our investment tracker website! Here, you can easily monitor your portfolio's performance and access key metrics to make informed financial 
+              Welcome to our investment tracker website! Here, you can easily
+              monitor your portfolio's performance and access key metrics to
+              make informed financial
             </div>
-            <Button>
-              Track Portfolio
-            </Button>
+            <Button>Track Portfolio</Button>
           </div>
           <div className="flex justify-center items-center">
-            <img src={ invest} className="w-3/4 h-5/6 "/>
+            <img src={invest} className="w-3/4 h-5/6 " />
           </div>
         </section>
         <section className="space-y-6">
@@ -83,90 +78,101 @@ export default function LandingPage() {
                 Asset Allocation
               </CardHeader>
               <CardContent className="font-semibold text-gray-400">
-                Our cutting-edge analytics provide a comprehensive view of your portfolio, empowering you to optimize your investment strategy and maximize your returns
+                Our cutting-edge analytics provide a comprehensive view of your
+                portfolio, empowering you to optimize your investment strategy
+                and maximize your returns
               </CardContent>
             </Card>
-               <Card className="max-w-64 border border-black">
+            <Card className="max-w-64 border border-black">
               <CardHeader className="font-bold font-mono text-xl">
-               Portfolio
+                Portfolio
               </CardHeader>
               <CardContent className="font-semibold text-gray-400">
-                Leverage our advanced tools to ensure your investments are balanced and aligned with your financial goals, reducing risk and maximizing
+                Leverage our advanced tools to ensure your investments are
+                balanced and aligned with your financial goals, reducing risk
+                and maximizing
               </CardContent>
             </Card>
-               <Card className="max-w-64 border border-black">
+            <Card className="max-w-64 border border-black">
               <CardHeader className="font-bold font-mono text-xl">
-               Performance
+                Performance
               </CardHeader>
               <CardContent className="font-semibold text-gray-400">
-                Stay on top of your portfolio's performance with real-time updates and historical data, allowing you to make timely adjustments and capitalize on market 
+                Stay on top of your portfolio's performance with real-time
+                updates and historical data, allowing you to make timely
+                adjustments and capitalize on market
               </CardContent>
             </Card>
-              <Card className="max-w-64 border border-black">
+            <Card className="max-w-64 border border-black">
               <CardHeader className="font-bold font-mono text-xl">
-               Key Metrics
+                Key Metrics
               </CardHeader>
               <CardContent className="font-semibold text-gray-400">
-                Gain valuable insights into your portfolio's health, including returns, risk levels, and sector exposure, to make informed investment decisions
+                Gain valuable insights into your portfolio's health, including
+                returns, risk levels, and sector exposure, to make informed
+                investment decisions
               </CardContent>
             </Card>
           </div>
         </section>
         <section className="flex">
           <div className="flex justify-center items-center">
-            <img src={clock} className="w-3/4 h-5/6 "/>
+            <img src={clock} className="w-3/4 h-5/6 " />
           </div>
           <div className="w-1/2 flex flex-col text-left justify-start items-center pt-32 space-y-9 pr-24">
-             <div className="w-full font-semibold text-gray-400">
+            <div className="w-full font-semibold text-gray-400">
               Time to invest
             </div>
             <div className="w-full text-5xl font-semibold font-mono">
-             Market Outlook
+              Market Outlook
             </div>
             <div className="w-full font-semibold text-gray-400">
-              Explore the latest market trends, economic indicators, and expert analysis to stay ahead of the curve and seize the right investment opportunities at the right time
+              Explore the latest market trends, economic indicators, and expert
+              analysis to stay ahead of the curve and seize the right investment
+              opportunities at the right time
             </div>
-            <Button>
-              Track Portfolio
-            </Button>
+            <Button>Track Portfolio</Button>
           </div>
         </section>
-         <section className="flex">
+        <section className="flex">
           <div className="w-1/2 flex flex-col text-left justify-start items-center pt-32 space-y-9 pl-24">
-             <div className="w-full font-semibold text-green-700">
+            <div className="w-full font-semibold text-green-700">
               Grow Your Wealth
             </div>
             <div className="w-full text-7xl font-bold font-mono">
               Secure Your Financial Future
             </div>
             <div className="w-full font-semibold text-gray-400">
-             Our investment tracker empowers you to take control of your financial destiny. By providing a comprehensive view of your portfolio, we help you make informed decisions, optimize your investments, and confidently navigate the ever-evolving market landscape.
+              Our investment tracker empowers you to take control of your
+              financial destiny. By providing a comprehensive view of your
+              portfolio, we help you make informed decisions, optimize your
+              investments, and confidently navigate the ever-evolving market
+              landscape.
             </div>
-            <Button>
-              Start Investing
-            </Button>
+            <Button>Start Investing</Button>
           </div>
           <div className="flex justify-center items-center">
-            <img src={ future} className="w-3/4 h-5/6 "/>
+            <img src={future} className="w-3/4 h-5/6 " />
           </div>
         </section>
         <section className="flex">
           <div className="flex justify-center items-center">
-            <img src={ elevate} className="w-3/4 h-5/6 "/>
+            <img src={elevate} className="w-3/4 h-5/6 " />
           </div>
           <div className="w-1/2 flex flex-col text-left justify-start items-center pt-32 space-y-9 pr-24">
-             <div className="w-full font-semibold text-gray-400">
+            <div className="w-full font-semibold text-gray-400">
               Unlock Your Potential
             </div>
             <div className="w-full text-5xl font-semibold font-mono">
-            Elevate Your Investments
+              Elevate Your Investments
             </div>
             <div className="w-full font-semibold text-gray-400">
-              Leverage our advanced analytics and cutting-edge tools to unlock the full potential of your portfolio. Gain deep insights, identify growth opportunities, and make strategic decisions that propel your wealth to new heights.
+              Leverage our advanced analytics and cutting-edge tools to unlock
+              the full potential of your portfolio. Gain deep insights, identify
+              growth opportunities, and make strategic decisions that propel
+              your wealth to new heights.
             </div>
-            <Button>
-              Optimize Now
-            </Button>
+            <Button>Optimize Now</Button>
           </div>
         </section>
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-b from-blue-50 to-white">
@@ -180,12 +186,19 @@ export default function LandingPage() {
                   Effortlessly manage and analyze your investment portfolio with
                   our powerful, user-friendly platform.
                 </p>
-                 <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
-                 Register now for early access!
+                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
+                  Register now for early access!
                 </p>
               </div>
               <div className="w-full max-w-sm space-y-2 flex justify-center">
-                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeiq1dSVC3kS3Im8CbU-l6wnP5KdkML61G3kVNzx3W0ud0NPA/viewform?embedded=true" width="100%" height="418" frameBorder="0">Loading…</iframe>
+                <iframe
+                  src="https://docs.google.com/forms/d/e/1FAIpQLSeiq1dSVC3kS3Im8CbU-l6wnP5KdkML61G3kVNzx3W0ud0NPA/viewform?embedded=true"
+                  width="100%"
+                  height="418"
+                  frameBorder="0"
+                >
+                  Loading…
+                </iframe>
               </div>
             </div>
           </div>

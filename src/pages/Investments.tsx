@@ -53,7 +53,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import UploadPic from "@/components/UploadPic/upload";
-import { StockNameInput } from "@/components/StockNameInput/StockNameInput";
+import LoginFirstComponent from "@/components/Auth/LoginFirstComponent";
+//import { StockNameInput } from "@/components/StockNameInput/StockNameInput";
 
 interface NewsLink {
   snippet: string;
@@ -304,318 +305,336 @@ export default function InvestmentTracker() {
             Investment Tracker
           </h1>
 
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle>Add New Stock</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={addStock} className="flex flex-wrap gap-4">
-                <Input
-                  placeholder="Stock Quote (e.g., GOOG)"
-                  value={newStock.name}
-                  onChange={(e) =>
-                    setNewStock({ ...newStock, name: e.target.value })
-                  }
-                  className="flex-grow"
-                />
-                <StockNameInput />
-                <Input
-                  type="number"
-                  placeholder="Quantity"
-                  value={newStock.quantity || ""}
-                  onChange={(e) =>
-                    setNewStock({
-                      ...newStock,
-                      quantity: Number(e.target.value),
-                    })
-                  }
-                  className="w-32"
-                />
-                <Input
-                  type="number"
-                  placeholder="Purchase Price"
-                  value={newStock.purchasePrice || ""}
-                  onChange={(e) =>
-                    setNewStock({
-                      ...newStock,
-                      purchasePrice: Number(e.target.value),
-                    })
-                  }
-                  className="w-32"
-                />
-                <Button type="submit" disabled={loading}>
-                  {loading ? (
-                    "Adding..."
-                  ) : (
-                    <PlusIcon className="mr-2 h-4 w-4" />
-                  )}
-                  {loading ? null : "Add Stock"}
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle>
-                <div className="flex justify-between">
-                  <div>Your Investments</div>
-                  <div className="flex space-x-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={triggerFileUpload}
-                    >
-                      <UploadIcon className="mr-2 h-4 w-4" />
-                      Upload
-                    </Button>
-                    <input
-                      type="file"
-                      ref={fileInputRef}
-                      onChange={onFileChange}
-                      accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-                      className="hidden"
+          {isAuthenticated ? (
+            <div>
+              {" "}
+              <Card className="mb-6">
+                <CardHeader>
+                  <CardTitle>Add New Stock</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <form onSubmit={addStock} className="flex flex-wrap gap-4">
+                    <Input
+                      placeholder="Stock Quote (e.g., GOOG)"
+                      value={newStock.name}
+                      onChange={(e) =>
+                        setNewStock({ ...newStock, name: e.target.value })
+                      }
+                      className="flex-grow"
                     />
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="outline" size="sm">
-                          <DownloadIcon className="mr-2 h-4 w-4" />
-                          Download
+
+                    <Input
+                      type="number"
+                      placeholder="Quantity"
+                      value={newStock.quantity || ""}
+                      onChange={(e) =>
+                        setNewStock({
+                          ...newStock,
+                          quantity: Number(e.target.value),
+                        })
+                      }
+                      className="w-32"
+                    />
+                    <Input
+                      type="number"
+                      placeholder="Purchase Price"
+                      value={newStock.purchasePrice || ""}
+                      onChange={(e) =>
+                        setNewStock({
+                          ...newStock,
+                          purchasePrice: Number(e.target.value),
+                        })
+                      }
+                      className="w-32"
+                    />
+                    <Button type="submit" disabled={loading}>
+                      {loading ? (
+                        "Adding..."
+                      ) : (
+                        <PlusIcon className="mr-2 h-4 w-4" />
+                      )}
+                      {loading ? null : "Add Stock"}
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
+              <Card className="mb-6">
+                <CardHeader>
+                  <CardTitle>
+                    <div className="flex justify-between">
+                      <div>Your Investments</div>
+                      <div className="flex space-x-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={triggerFileUpload}
+                        >
+                          <UploadIcon className="mr-2 h-4 w-4" />
+                          Upload
                         </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent>
-                        <DropdownMenuItem onClick={() => downloadCSV(stocks)}>
-                          Download as CSV
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => downloadExcel(stocks)}>
-                          Download as Excel
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </div>
-                </div>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Stock</TableHead>
-                    <TableHead>Quantity</TableHead>
-                    <TableHead>Purchase Price</TableHead>
-                    <TableHead>Current Price</TableHead>
-                    <TableHead>Total Invested</TableHead>
-                    <TableHead>Profit/Loss</TableHead>
-                    <TableHead>Edit</TableHead>
-                    <TableHead>View Stock Performance</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {stocks.map((stock, index) => {
-                    const investedAmount = stock.purchasePrice * stock.quantity;
-                    const profitLoss =
-                      (stock.currentPrice - stock.purchasePrice) *
-                      stock.quantity;
-                    const profitLossPercentage =
-                      ((stock.currentPrice - stock.purchasePrice) /
-                        stock.purchasePrice) *
-                      100;
-                    return (
-                      <TableRow key={stock.id}>
-                        <TableCell className="font-medium">
-                          {stock.name}
-                        </TableCell>
-                        <TableCell>{stock.quantity}</TableCell>
-                        <TableCell>₹{stock.purchasePrice.toFixed(2)}</TableCell>
-                        <TableCell>₹{stock.currentPrice.toFixed(2)}</TableCell>
-                        <TableCell>₹{investedAmount.toFixed(2)}</TableCell>
-                        <TableCell>
-                          <span
-                            className={
-                              profitLoss >= 0
-                                ? "text-green-600"
-                                : "text-red-600"
-                            }
-                          >
-                            ₹{Math.abs(profitLoss).toFixed(2)}
-                            {profitLoss >= 0 ? (
-                              <TrendingUpIcon className="inline ml-1 h-4 w-4" />
-                            ) : (
-                              <TrendingDownIcon className="inline ml-1 h-4 w-4" />
-                            )}
-                            <span className="ml-1 text-xs">
-                              ({profitLossPercentage.toFixed(2)}%)
-                            </span>
-                          </span>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex space-x-2">
-                            <Sheet key="right">
-                              <SheetTrigger asChild>
-                                <Button
-                                  variant="ghost"
-                                  onClick={() => setSelectedStockIndex(index)}
-                                >
-                                  <PenBox />
-                                </Button>
-                              </SheetTrigger>
-                              <SheetContent side="right">
-                                <SheetHeader>
-                                  <SheetTitle>
-                                    Stock Details: {stock.name}
-                                  </SheetTitle>
-                                  <SheetDescription>
-                                    View details and news for the selected
-                                    stock.
-                                  </SheetDescription>
-                                </SheetHeader>
-                                <div className="grid gap-4 py-4">
-                                  <div className="grid grid-cols-4 items-center gap-4">
-                                    <Label
-                                      htmlFor="name"
-                                      className="text-right"
-                                    >
-                                      Name
-                                    </Label>
-                                    <Input
-                                      id="name"
-                                      value="Pedro Duarte"
-                                      className="col-span-3"
-                                    />
-                                  </div>
-                                  <div className="grid grid-cols-4 items-center gap-4">
-                                    <Label
-                                      htmlFor="username"
-                                      className="text-right"
-                                    >
-                                      Username
-                                    </Label>
-                                    <Input
-                                      id="username"
-                                      value="@peduarte"
-                                      className="col-span-3"
-                                    />
-                                  </div>
-                                  <div>
-                                    <div>News</div>
-                                    <StockNewsCard
-                                      /* symbol={stockSymbol}*/
-                                      news={
-                                        selectedStockIndex !== null
-                                          ? stocks[selectedStockIndex].news
-                                          : []
-                                      }
-                                    />
-                                  </div>
-                                </div>
-                                <SheetFooter>
-                                  <SheetClose asChild>
-                                    <Button type="submit">Save changes</Button>
-                                  </SheetClose>
-                                </SheetFooter>
-                              </SheetContent>
-                            </Sheet>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <Dialog>
-                            <DialogTrigger className="border p-4 rounded-lg">
-                              Open Stock Performance
-                            </DialogTrigger>
-                            <DialogContent>
-                              <DialogHeader>
-                                <DialogTitle>
-                                  Today's Performance with time stamps
-                                </DialogTitle>
-                                <DialogDescription>
-                                  <StockGraph />
-                                </DialogDescription>
-                              </DialogHeader>
-                            </DialogContent>
-                          </Dialog>
-                        </TableCell>
+                        <input
+                          type="file"
+                          ref={fileInputRef}
+                          onChange={onFileChange}
+                          accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                          className="hidden"
+                        />
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="outline" size="sm">
+                              <DownloadIcon className="mr-2 h-4 w-4" />
+                              Download
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent>
+                            <DropdownMenuItem
+                              onClick={() => downloadCSV(stocks)}
+                            >
+                              Download as CSV
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() => downloadExcel(stocks)}
+                            >
+                              Download as Excel
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
+                    </div>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Stock</TableHead>
+                        <TableHead>Quantity</TableHead>
+                        <TableHead>Purchase Price</TableHead>
+                        <TableHead>Current Price</TableHead>
+                        <TableHead>Total Invested</TableHead>
+                        <TableHead>Profit/Loss</TableHead>
+                        <TableHead>Edit</TableHead>
+                        <TableHead>View Stock Performance</TableHead>
                       </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
+                    </TableHeader>
+                    <TableBody>
+                      {stocks.map((stock, index) => {
+                        const investedAmount =
+                          stock.purchasePrice * stock.quantity;
+                        const profitLoss =
+                          (stock.currentPrice - stock.purchasePrice) *
+                          stock.quantity;
+                        const profitLossPercentage =
+                          ((stock.currentPrice - stock.purchasePrice) /
+                            stock.purchasePrice) *
+                          100;
+                        return (
+                          <TableRow key={stock.id}>
+                            <TableCell className="font-medium">
+                              {stock.name}
+                            </TableCell>
+                            <TableCell>{stock.quantity}</TableCell>
+                            <TableCell>
+                              ₹{stock.purchasePrice.toFixed(2)}
+                            </TableCell>
+                            <TableCell>
+                              ₹{stock.currentPrice.toFixed(2)}
+                            </TableCell>
+                            <TableCell>₹{investedAmount.toFixed(2)}</TableCell>
+                            <TableCell>
+                              <span
+                                className={
+                                  profitLoss >= 0
+                                    ? "text-green-600"
+                                    : "text-red-600"
+                                }
+                              >
+                                ₹{Math.abs(profitLoss).toFixed(2)}
+                                {profitLoss >= 0 ? (
+                                  <TrendingUpIcon className="inline ml-1 h-4 w-4" />
+                                ) : (
+                                  <TrendingDownIcon className="inline ml-1 h-4 w-4" />
+                                )}
+                                <span className="ml-1 text-xs">
+                                  ({profitLossPercentage.toFixed(2)}%)
+                                </span>
+                              </span>
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex space-x-2">
+                                <Sheet key="right">
+                                  <SheetTrigger asChild>
+                                    <Button
+                                      variant="ghost"
+                                      onClick={() =>
+                                        setSelectedStockIndex(index)
+                                      }
+                                    >
+                                      <PenBox />
+                                    </Button>
+                                  </SheetTrigger>
+                                  <SheetContent side="right">
+                                    <SheetHeader>
+                                      <SheetTitle>
+                                        Stock Details: {stock.name}
+                                      </SheetTitle>
+                                      <SheetDescription>
+                                        View details and news for the selected
+                                        stock.
+                                      </SheetDescription>
+                                    </SheetHeader>
+                                    <div className="grid gap-4 py-4">
+                                      <div className="grid grid-cols-4 items-center gap-4">
+                                        <Label
+                                          htmlFor="name"
+                                          className="text-right"
+                                        >
+                                          Name
+                                        </Label>
+                                        <Input
+                                          id="name"
+                                          value="Pedro Duarte"
+                                          className="col-span-3"
+                                        />
+                                      </div>
+                                      <div className="grid grid-cols-4 items-center gap-4">
+                                        <Label
+                                          htmlFor="username"
+                                          className="text-right"
+                                        >
+                                          Username
+                                        </Label>
+                                        <Input
+                                          id="username"
+                                          value="@peduarte"
+                                          className="col-span-3"
+                                        />
+                                      </div>
+                                      <div>
+                                        <div>News</div>
+                                        <StockNewsCard
+                                          /* symbol={stockSymbol}*/
+                                          news={
+                                            selectedStockIndex !== null
+                                              ? stocks[selectedStockIndex].news
+                                              : []
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                    <SheetFooter>
+                                      <SheetClose asChild>
+                                        <Button type="submit">
+                                          Save changes
+                                        </Button>
+                                      </SheetClose>
+                                    </SheetFooter>
+                                  </SheetContent>
+                                </Sheet>
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <Dialog>
+                                <DialogTrigger className="border p-4 rounded-lg">
+                                  Open Stock Performance
+                                </DialogTrigger>
+                                <DialogContent>
+                                  <DialogHeader>
+                                    <DialogTitle>
+                                      Today's Performance with time stamps
+                                    </DialogTitle>
+                                    <DialogDescription>
+                                      <StockGraph />
+                                    </DialogDescription>
+                                  </DialogHeader>
+                                </DialogContent>
+                              </Dialog>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">
+                      Total Invested
+                    </CardTitle>
+                    <IndianRupeeIcon className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">
+                      ₹{totalInvested.toFixed(2)}
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">
+                      Total Current Value
+                    </CardTitle>
+                    <IndianRupeeIcon className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">
+                      ₹{totalCurrent.toFixed(2)}
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">
+                      Total Profit/Loss
+                    </CardTitle>
+                    <PercentIcon className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div
+                      className={`text-2xl font-bold ${
+                        totalProfitLoss >= 0 ? "text-green-600" : "text-red-600"
+                      }`}
+                    >
+                      ₹{Math.abs(totalProfitLoss).toFixed(2)}
+                      {totalProfitLoss >= 0 ? (
+                        <TrendingUpIcon className="inline ml-1 h-4 w-4" />
+                      ) : (
+                        <TrendingDownIcon className="inline ml-1 h-4 w-4" />
+                      )}
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      {((totalProfitLoss / totalInvested) * 100).toFixed(2)}%
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+              <div className="mt-2 flex justify-between">
+                <TotalInvestmentChart
+                  stocks={stocks}
+                  totalAmountInvested={totalInvested}
+                />
+                <ProfitLossChart />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Total Invested
-                </CardTitle>
-                <IndianRupeeIcon className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  ₹{totalInvested.toFixed(2)}
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Total Current Value
-                </CardTitle>
-                <IndianRupeeIcon className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  ₹{totalCurrent.toFixed(2)}
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Total Profit/Loss
-                </CardTitle>
-                <PercentIcon className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div
-                  className={`text-2xl font-bold ${
-                    totalProfitLoss >= 0 ? "text-green-600" : "text-red-600"
-                  }`}
-                >
-                  ₹{Math.abs(totalProfitLoss).toFixed(2)}
-                  {totalProfitLoss >= 0 ? (
-                    <TrendingUpIcon className="inline ml-1 h-4 w-4" />
-                  ) : (
-                    <TrendingDownIcon className="inline ml-1 h-4 w-4" />
-                  )}
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  {((totalProfitLoss / totalInvested) * 100).toFixed(2)}%
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-          <div className="mt-2 flex justify-between">
-            <TotalInvestmentChart
-              stocks={stocks}
-              totalAmountInvested={totalInvested}
-            />
-            <ProfitLossChart />
-
-            <Dialog>
-              <DialogTrigger className="border p-4 rounded-lg border-black max-h-[50px]">
-                Generate your card
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogDescription>
-                    <InvestmentShowcaseCard data={investmentData} />
-                  </DialogDescription>
-                </DialogHeader>
-              </DialogContent>
-            </Dialog>
-            <UploadPic />
-          </div>
+                <Dialog>
+                  <DialogTrigger className="border p-4 rounded-lg border-black max-h-[50px]">
+                    Generate your card
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogDescription>
+                        <InvestmentShowcaseCard data={investmentData} />
+                      </DialogDescription>
+                    </DialogHeader>
+                  </DialogContent>
+                </Dialog>
+                <UploadPic />
+              </div>{" "}
+            </div>
+          ) : (
+            <LoginFirstComponent />
+          )}
         </div>
       </main>
     </div>

@@ -20,7 +20,7 @@ function Navbar() {
               </span>
             </Link>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center space-x-2">
             <Button variant="ghost">
               <Link to="/"> Dashboard</Link>
             </Button>
