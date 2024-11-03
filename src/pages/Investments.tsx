@@ -52,8 +52,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import UploadPic from "@/components/UploadPic/upload";
+// import UploadPic from "@/components/UploadPic/upload";
 import LoginFirstComponent from "@/components/Auth/LoginFirstComponent";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 //import { StockNameInput } from "@/components/StockNameInput/StockNameInput";
 
 interface NewsLink {
@@ -364,14 +370,26 @@ export default function InvestmentTracker() {
                     <div className="flex justify-between">
                       <div>Your Investments</div>
                       <div className="flex space-x-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={triggerFileUpload}
-                        >
-                          <UploadIcon className="mr-2 h-4 w-4" />
-                          Upload
-                        </Button>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={triggerFileUpload}
+                              >
+                                <UploadIcon className="mr-2 h-4 w-4" />
+                                Upload
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>
+                                Upload your own Excel/CSV and start editing!
+                              </p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+
                         <input
                           type="file"
                           ref={fileInputRef}
@@ -629,7 +647,7 @@ export default function InvestmentTracker() {
                     </DialogHeader>
                   </DialogContent>
                 </Dialog>
-                <UploadPic />
+                {/* <UploadPic /> */}
               </div>{" "}
             </div>
           ) : (

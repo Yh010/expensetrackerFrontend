@@ -22,7 +22,7 @@ function Navbar() {
           </div>
           <div className="flex items-center space-x-2">
             <Button variant="ghost">
-              <Link to="/"> Dashboard</Link>
+              <Link to="/app"> Dashboard</Link>
             </Button>
             <Button variant="ghost">
               <Link to="/profile"> Profile</Link>
