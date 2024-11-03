@@ -25,15 +25,12 @@ import { ProfitLossChart } from "@/components/ProfitLossPieChart";
 import Navbar from "@/components/Navbar/Navbar";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Label } from "@/components/ui/label";
 import { useAuth0 } from "@auth0/auth0-react";
 import StockNewsCard from "@/components/StockEdit/NewsCard";
 import {
