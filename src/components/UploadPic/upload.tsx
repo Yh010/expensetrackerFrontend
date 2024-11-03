@@ -11,7 +11,11 @@ function UploadPic() {
       const response = await axios.get<{
         urls: { signedUrl?: string; publicUrl?: string };
       }>(
-        `http://localhost:3000/filepath?filename=${filename}&path=${foldersPath}&contentType=${file.type}`
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }filepath?filename=${filename}&path=${foldersPath}&contentType=${
+          file.type
+        }`
       );
       const s3Urls = response.data?.urls;
       if (!s3Urls.signedUrl) {
