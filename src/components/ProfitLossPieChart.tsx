@@ -20,12 +20,15 @@ import {
 
 export const description = "A pie chart with a label list";
 
+
+const generateColor = () => `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
+
 const chartData = [
-  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
-  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-  { browser: "other", visitors: 90, fill: "var(--color-other)" },
+  { browser: "chrome", visitors: 275, fill: generateColor() },
+  { browser: "safari", visitors: 200, fill: generateColor() },
+  { browser: "firefox", visitors: 187, fill:  generateColor() },
+  { browser: "edge", visitors: 173, fill:   generateColor() },
+  { browser: "other", visitors: 90, fill:   generateColor() },
 ];
 
 const chartConfig = {
@@ -34,23 +37,23 @@ const chartConfig = {
   },
   chrome: {
     label: "Chrome",
-    color: "hsl(var(--chart-1))",
+    color: generateColor(),
   },
   safari: {
     label: "Safari",
-    color: "hsl(var(--chart-2))",
+    color: generateColor(),
   },
   firefox: {
     label: "Firefox",
-    color: "hsl(var(--chart-3))",
+    color: generateColor(),
   },
   edge: {
     label: "Edge",
-    color: "hsl(var(--chart-4))",
+    color:  generateColor(),
   },
   other: {
     label: "Other",
-    color: "hsl(var(--chart-5))",
+    color:  generateColor(),
   },
 } satisfies ChartConfig;
 
